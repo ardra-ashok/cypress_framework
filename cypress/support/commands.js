@@ -15,7 +15,6 @@ Cypress.Commands.add('selectProduct', (productName) => {
    if (el.text().includes('Blackberry'))
      cy.get('button.btn.btn-info').eq(index).click()
  })
-
 })
 
 //
