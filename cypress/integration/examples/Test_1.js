@@ -3,13 +3,13 @@ import ProductsPage from '../pageObjects/ProductsPage'
 import CartPage from '../pageObjects/CartPage'
 import ShippingPage from '../pageObjects/ShippingPage'
 
-describe('Calender Tests', function () {
+describe('Shopping Cart', function () {
   before(function () {
     cy.fixture('example').then(function (data) {
       this.data = data
     })
   })
-  it('Verify date selection', function () {
+  it('Verify shopping cart function', function () {
     Cypress.config('defaultCommandTimeout', 8000) // can add this anywhere we need a spec level timeout
 
     const homePage = new HomePage()
@@ -29,10 +29,24 @@ describe('Calender Tests', function () {
 
     // cy.selectProduct(this.data.product_name)
     this.data.product_names.forEach((prod) => {
-      cy.log(prod)
       cy.selectProduct(prod)
     })
+    var sum = 0
     products.get_checkOutBtn().click()
+    cartPage
+      .get_productPrice()
+      .each((el, index, list) => {
+        const actualPrice = el.text()
+        var res = Number(actualPrice.split(' ')[1].trim())
+        sum = sum + res
+      })
+      .then(() => {
+        cartPage.get_totalPrice().then((elem) => {
+          var totalPrice = Number(elem.text().split(' ')[1])
+          expect(totalPrice).to.equal(sum)
+        })
+      })
+
     cartPage.get_cartCheckOutBtn().click()
     shippingPage.get_countryInput().type('India')
     shippingPage.get_selectCountry().click()
