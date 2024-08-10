@@ -4,6 +4,9 @@ module.exports = defineConfig({
   projectId: 'wstg6o',
   defaultCommandTimeout: 6000,
   reporter: 'cypress-mochawesome-reporter',
+  retries: {
+    runMode: 1,
+  },
   env: {
     url: 'https://rahulshettyacademy.com',
   },
