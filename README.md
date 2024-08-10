@@ -1,0 +1,1 @@
+npx cypress run --env tags="@Regression" --headed --browser chrome

@@ -31,8 +31,8 @@ describe('Shopping Cart', function () {
     this.data.product_names.forEach((prod) => {
       cy.selectProduct(prod)
     })
-    var sum = 0
     products.get_checkOutBtn().click()
+    var sum = 0
     cartPage
       .get_productPrice()
       .each((el, index, list) => {
