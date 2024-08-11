@@ -10,13 +10,13 @@ const cartPage = new CartPage()
 const shippingPage = new ShippingPage()
 
 let name
-Given('I open Ecommerce Page', function () {
+Given('I open Ecommerce Page', () =>{
   cy.visit(Cypress.env('url') + '/angularpractice/')
 })
 
-When('I add items to Cart', () => {
+When('I add items to Cart', function() {
   homePage.get_shopTab().click()
-  data.product_names.forEach((prod) => {
+  this.data.product_names.forEach((prod) => {
     cy.selectProduct(prod)
   })
   products.get_checkOutBtn().click()
