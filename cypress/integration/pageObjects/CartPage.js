@@ -8,6 +8,7 @@ class CartPage {
  get_totalPrice() {
   return cy.get('h3 strong')
  }
+
 }
 
 export default CartPage

@@ -1,0 +1,105 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2024-08-18T11:01:00.634Z",
+    "end": "2024-08-18T11:01:12.906Z",
+    "duration": 12272,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "44cdb8b1-16fe-41ac-99e0-b903578ef68e",
+      "title": "",
+      "fullFile": "cypress/integration/examples/Test_1.js",
+      "file": "cypress/integration/examples/Test_1.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "610b83b6-21d0-4610-99d6-83274665c54c",
+          "title": "Shopping Cart",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Verify shopping cart function",
+              "fullTitle": "Shopping Cart Verify shopping cart function",
+              "timedOut": null,
+              "duration": 10481,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "Cypress.config('defaultCommandTimeout', 8000); // can add this anywhere we need a spec level timeout\nvar homePage = new _HomePage[\"default\"]();\nvar products = new _ProductsPage[\"default\"]();\nvar cartPage = new _CartPage[\"default\"]();\nvar shippingPage = new _ShippingPage[\"default\"]();\ncy.visit(Cypress.env('url') + '/angularpractice/');\nhomePage.get_nameInput().type(this.data.name);\nhomePage.get_emailInput().type(this.data.email);\nhomePage.get_selectGender().select(this.data.gender);\nhomePage.get_dataBindingInput().should('have.value', this.data.name); // can also be done by .text() method\nhomePage.get_nameInput().should('have.attr', 'minlength', '2'); // can also be done by prop method\nhomePage.get_entrepreneur().should('be.disabled');\n// cy.pause()\nhomePage.get_shopTab().click();\n// cy.get(':nth-child(2) > .nav-link').click().debug() // debug and pause\n// cy.selectProduct(this.data.product_name)\nthis.data.product_names.forEach(function (prod) {\n  cy.selectProduct(prod);\n});\nproducts.get_checkOutBtn().click();\nvar sum = 0;\ncartPage.get_productPrice().each(function (el, index, list) {\n  var actualPrice = el.text();\n  var res = Number(actualPrice.split(' ')[1].trim());\n  sum = sum + res;\n}).then(function () {\n  cartPage.get_totalPrice().then(function (elem) {\n    var totalPrice = Number(elem.text().split(' ')[1]);\n    expect(totalPrice).to.equal(sum);\n  });\n});\ncartPage.get_cartCheckOutBtn().click();\nshippingPage.get_countryInput().type('India');\nshippingPage.get_selectCountry().click();\nshippingPage.get_agreeTermsCheck().click({\n  force: true\n});\nshippingPage.get_purchaseBtn().click();\nshippingPage.get_successAlert().then(function (elem) {\n  var successAlert = elem.text();\n  expect(successAlert.includes('Success')).to.be[\"true\"];\n  cy.log('Purchase is successful');\n});",
+              "err": {},
+              "uuid": "eb2c6611-fad0-45fc-bafd-f9117f9c1871",
+              "parentUUID": "610b83b6-21d0-4610-99d6-83274665c54c",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "eb2c6611-fad0-45fc-bafd-f9117f9c1871"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 10481,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "overwrite": false,
+        "html": false,
+        "json": true,
+        "reportDir": "cypress/reports/html/.jsons"
+      },
+      "version": "6.2.0"
+    }
+  }
+}
